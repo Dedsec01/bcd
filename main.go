@@ -13,6 +13,7 @@ import (
 	"github.com/bytesizedhosting/bcd/plugins/jackett"
 	"github.com/bytesizedhosting/bcd/plugins/jobs"
 	"github.com/bytesizedhosting/bcd/plugins/murmur"
+	"github.com/Dedsec01/bcd/plugins/owncloud"
 	"github.com/bytesizedhosting/bcd/plugins/nzbget"
 	"github.com/bytesizedhosting/bcd/plugins/plex"
 	"github.com/bytesizedhosting/bcd/plugins/plexpy"
@@ -153,6 +154,13 @@ func startApp(config *core.MainConfig) {
 		log.Infoln("Could not enable plugin: ", err)
 	} else {
 		engine.Activate(murmur)
+	}
+	
+	owncloud, err := owncloud.New(dockerClient)
+	if err != nil {
+		log.Infoln("Could not enable plugin: ", err)
+	} else {
+		engine.Activate(owncloud)
 	}
 
 	filebot, err := filebot.New(dockerClient)
